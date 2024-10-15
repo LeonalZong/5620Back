@@ -8,13 +8,16 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface UserMapper {
 
+    // 根据用户名和密码获取用户信息
     @Select("SELECT * FROM Users WHERE username = #{username} AND password = #{password}")
     Users getByUsernameAndPassword(Users user);
 
+    // 根据用户名获取用户信息
     @Select("SELECT * FROM Users WHERE username = #{username}")
     Users getByUsername(String username);
 
-    @Insert("INSERT INTO Users (name, email, phone, accessType, username, password) " +
-            "VALUES (#{name}, #{email}, #{phone}, #{accessType}, #{username}, #{password})")
+    // 插入新用户时需要确保与数据库字段一致
+    @Insert("INSERT INTO Users (username, email, role, password, registration_date) " +
+            "VALUES (#{username}, #{email}, #{role}, #{password}, CURRENT_TIMESTAMP)")
     void insertUser(Users user);
 }

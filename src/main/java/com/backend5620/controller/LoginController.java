@@ -28,8 +28,8 @@ public class LoginController {
 
         if (u != null) {
             Map<String, Object> claims = new HashMap<>();
-            claims.put("id", u.getId());
-            claims.put("name", u.getName());
+            claims.put("id", u.getUserId());
+
             claims.put("username", u.getUsername());
 
             String jwt = Jwtutils.generateJwt(claims);
