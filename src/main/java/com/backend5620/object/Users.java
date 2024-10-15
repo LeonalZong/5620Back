@@ -1,25 +1,19 @@
 package com.backend5620.object;
 
-
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class Users {
 
-    private int id; // ID
-    private String name; // Name
-    private String email; // Email
-    private String phone; // Phone
-
-    private int accessType; // AccessType
-    private String username; // Username
-    private String password; // Password (default is '123456')
+    private int userId;
+    private String username;
+    private String password; // 密码（默认 '123456'）
+    private String email;
+    private String role; // 用户角色 (例如 'Customer', 'Expert', 'TechTeam')
+    private String registrationDate; // 注册时间，格式为 TIMESTAMP
 
 }
-
