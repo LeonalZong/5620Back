@@ -18,6 +18,6 @@ public interface UserMapper {
 
     // 插入新用户时需要确保与数据库字段一致
     @Insert("INSERT INTO Users (username, email, password, registration_date) " +
-            "VALUES (#{username}, #{email}, #{role}, #{password}, CURRENT_TIMESTAMP)")
+            "VALUES (#{username}, #{email}, #{password}, CURRENT_TIMESTAMP)")
     void insertUser(Users user);
 }
