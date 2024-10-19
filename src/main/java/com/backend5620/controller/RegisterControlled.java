@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class RegisterControlled {
     @Autowired
     private UserService userService;

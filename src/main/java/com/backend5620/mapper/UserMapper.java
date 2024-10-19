@@ -17,7 +17,7 @@ public interface UserMapper {
     Users getByUsername(String username);
 
     // 插入新用户时需要确保与数据库字段一致
-    @Insert("INSERT INTO Users (username, email, role, password, registration_date) " +
+    @Insert("INSERT INTO Users (username, email, password, registration_date) " +
             "VALUES (#{username}, #{email}, #{role}, #{password}, CURRENT_TIMESTAMP)")
     void insertUser(Users user);
 }
