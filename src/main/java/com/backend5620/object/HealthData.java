@@ -14,5 +14,6 @@ public class HealthData {
     private double weight;
     private double cholesterol;
     private String bloodPressure;
+    private int restingHeartRate;
     private String recordedAt;
 }
