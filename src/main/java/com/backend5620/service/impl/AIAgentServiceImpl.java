@@ -31,7 +31,7 @@ public class AIAgentServiceImpl implements AIAgentService {
     @Autowired
     private HealthReportMapper healthReportMapper;
 
-    @Value("${openai.apiKey}")
+//    @Value("${openai.apiKey}")
     private String apiKey;
 
     @Value("${openai.apiUrl}")
@@ -48,7 +48,7 @@ public class AIAgentServiceImpl implements AIAgentService {
             String reportContent = callOpenAIAPI(prompt);
             if (reportContent != null) {
                 HealthReport healthReport = new HealthReport();
-                healthReport.setId(userId);
+                healthReport.setUserId(userId);
                 healthReport.setReportContent(reportContent);
                 healthReportMapper.insertHealthReport(healthReport);
                 logger.info("Health report for user {} saved successfully.", userId);
