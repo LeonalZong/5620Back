@@ -31,7 +31,7 @@ public class AIAgentServiceImpl implements AIAgentService {
     @Autowired
     private HealthReportMapper healthReportMapper;
 
-    @Value("${openai.apiKey}")
+    //@Value("${openai.apiKey}")
     private String apiKey;
 
     @Value("${openai.apiUrl}")
@@ -48,7 +48,7 @@ public class AIAgentServiceImpl implements AIAgentService {
             String reportContent = callOpenAIAPI(prompt);
             if (reportContent != null) {
                 HealthReport healthReport = new HealthReport();
-                healthReport.setId(userId);
+                healthReport.setUserId(userId);
                 healthReport.setReportContent(reportContent);
                 healthReportMapper.insertHealthReport(healthReport);
                 logger.info("Health report for user {} saved successfully.", userId);
@@ -69,7 +69,7 @@ public class AIAgentServiceImpl implements AIAgentService {
     private String createHealthPrompt(HealthData healthData) {
         return "Patient is a " + healthData.getAge() + "-year-old " + healthData.getGender() +
                 ", " + healthData.getHeight() + " cm tall, weighs " + healthData.getWeight() +
-                " kg, has blood pressure of " + healthData.getBloodPressure() +
+                " kg, has systolic blood pressure of " + healthData.getSystolicBloodPressure() +
                 ", cholesterol level is " + healthData.getCholesterol() + " mg/dL. " +
                 "Please generate a health report with lifestyle suggestions.";
     }

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class HealthReport {
     private int reportId;
-    private int Id;
+    private int userId;
     private String reportContent;
     private LocalDateTime createdAt;
 }
