@@ -17,7 +17,8 @@ public class HealthData {
     private double height;        // 身高
     private double weight;        // 体重
     private double cholesterol;   // 胆固醇
-    private String bloodPressure; // 血压
+    private double systolicBloodPressure; // 收缩血压
+    private double diastolicBloodPressure; //舒张血压
     private int restingHeartRate; // 静息心率
     private LocalDateTime recordedAt;
 }
