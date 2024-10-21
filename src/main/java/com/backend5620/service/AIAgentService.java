@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+
 public interface AIAgentService {
 
     void generateAndSaveHealthReport(int userId);

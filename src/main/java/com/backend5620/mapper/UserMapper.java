@@ -20,4 +20,7 @@ public interface UserMapper {
     @Insert("INSERT INTO Users (username, email, password, registration_date) " +
             "VALUES (#{username}, #{email}, #{password}, CURRENT_TIMESTAMP)")
     void insertUser(Users user);
+
+    @Select("SELECT * FROM Users WHERE userId = #{userId}")
+    Users getById(int userId);
 }

@@ -9,5 +9,5 @@ public interface HealthDataService {
 
     void saveHealthData(HealthData healthData);
 
-    HealthData getHealthDataByUserId(int userId);
+    HealthData getLatestHealthDataByUserId(int userId);
 }

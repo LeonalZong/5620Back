@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Users {
 
-    private int id;
+    private int userId;
     private String username;
     private String password; // 密码（默认 '123456'）
     private String email;
@@ -17,6 +17,6 @@ public class Users {
     private String registrationDate; // 注册时间，格式为 TIMESTAMP
 
     public int getId() {
-        return id;
+        return userId;
     }
 }

@@ -18,7 +18,7 @@ public class HealthDataServiceImpl implements HealthDataService {
     }
 
     @Override
-    public HealthData getHealthDataByUserId(int userId) {
-        return healthDataMapper.getHealthDataByUserId(userId);
+    public HealthData getLatestHealthDataByUserId(int userId) {
+        return healthDataMapper.getLatestHealthDataByUserId(userId);
     }
 }

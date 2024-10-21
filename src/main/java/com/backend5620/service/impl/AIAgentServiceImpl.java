@@ -1,9 +1,11 @@
 package com.backend5620.service.impl;
 
 import com.backend5620.mapper.HealthReportMapper;
+import com.backend5620.object.DietSportPreference;
 import com.backend5620.object.HealthData;
 import com.backend5620.object.HealthReport;
 import com.backend5620.service.AIAgentService;
+import com.backend5620.service.DietSportPreferenceService;
 import com.backend5620.service.HealthDataService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -31,6 +33,9 @@ public class AIAgentServiceImpl implements AIAgentService {
     @Autowired
     private HealthReportMapper healthReportMapper;
 
+    @Autowired
+    private DietSportPreferenceService dietSportPreferenceService;
+
     @Value("${openai.apiKey}")
     private String apiKey;
 
@@ -42,18 +47,20 @@ public class AIAgentServiceImpl implements AIAgentService {
 
     @Override
     public void generateAndSaveHealthReport(int userId) {
-        HealthData healthData = healthDataService.getHealthDataByUserId(userId);
+        HealthData healthData = healthDataService.getLatestHealthDataByUserId(userId); // 确保获取的是最新数据
+        DietSportPreference dietSportPreference = dietSportPreferenceService.getDietSportPreferenceByUserId(userId);
+
         if (healthData != null) {
-            String prompt = createHealthPrompt(healthData);
+            String prompt = createHealthPrompt(healthData, dietSportPreference); // 生成报告时使用最新的健康数据
             String reportContent = callOpenAIAPI(prompt);
-            if (reportContent != null) {
+            if (reportContent != null && !reportContent.isEmpty()) {
                 HealthReport healthReport = new HealthReport();
-                healthReport.setId(userId);
+                healthReport.setUserId(userId);
                 healthReport.setReportContent(reportContent);
-                healthReportMapper.insertHealthReport(healthReport);
+                healthReportMapper.insertHealthReport(healthReport); // 保存生成的报告
                 logger.info("Health report for user {} saved successfully.", userId);
             } else {
-                logger.error("Failed to generate report for user {}", userId);
+                logger.error("Failed to generate report for user {}: report content is null or empty.", userId);
             }
         } else {
             logger.error("No health data found for user {}", userId);
@@ -66,12 +73,22 @@ public class AIAgentServiceImpl implements AIAgentService {
         return callOpenAIAPI(prompt);
     }
 
-    private String createHealthPrompt(HealthData healthData) {
-        return "Patient is a " + healthData.getAge() + "-year-old " + healthData.getGender() +
-                ", " + healthData.getHeight() + " cm tall, weighs " + healthData.getWeight() +
-                " kg, has blood pressure of " + healthData.getBloodPressure() +
-                ", cholesterol level is " + healthData.getCholesterol() + " mg/dL. " +
-                "Please generate a health report with lifestyle suggestions.";
+    private String createHealthPrompt(HealthData healthData, DietSportPreference dietSportPreference) {
+        StringBuilder prompt = new StringBuilder();
+        prompt.append("Patient is a ").append("-year-old ")
+                .append(", ").append(healthData.getHeight()).append(" cm tall, weighs ").append(healthData.getWeight())
+                .append(" kg, has systolic blood pressure of ").append(healthData.getSystolicBloodPressure())
+                .append(", and diastolic blood pressure of ").append(healthData.getDiastolicBloodPressure())
+                .append(", cholesterol level is ").append(healthData.getCholesterol()).append(" mg/dL, resting heart rate is ")
+                .append(healthData.getRestingHeartRate()).append(" bpm. ");
+
+        if (dietSportPreference != null) {
+            prompt.append("The patient has the following diet preferences: ").append(dietSportPreference.getDietPreferences())
+                    .append(". And the following sport preferences: ").append(dietSportPreference.getSportPreferences()).append(". ");
+        }
+
+        prompt.append("Please generate a comprehensive health report with lifestyle and dietary suggestions.");
+        return prompt.toString();
     }
 
     private String createHealthPromptFromString(String healthData) {
