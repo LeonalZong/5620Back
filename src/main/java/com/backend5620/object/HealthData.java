@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -11,8 +12,9 @@ import java.time.LocalDateTime;
 @Data
 public class HealthData {
     private int healthDataId;
-
     private int userId; // 用户ID
+    private String gender;
+    private LocalDate birthDate;
     private double height; // 身高
     private double weight; // 体重
     private double cholesterol; // 胆固醇

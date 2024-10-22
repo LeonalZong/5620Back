@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/healthdata")
 @Slf4j
@@ -70,6 +72,28 @@ public class HealthDataController {
         } catch (Exception e) {
             log.error(e.getMessage());
             return Result.error("Failed to retrieve health data: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/history")
+    public Result getHistoricalHealthData(@RequestHeader("Authorization") String token) {
+        try {
+            // 移除 "Bearer " 前缀（如果有）
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
+            }
+
+            // 解析 JWT，获取用户ID
+            Claims claims = Jwtutils.parseJwt(token);
+            int userId = (int) claims.get("id");
+
+            log.info("Getting historical health data for userId: {}", userId);
+            List<HealthData> historicalData = healthDataService.getHistoricalHealthData(userId);
+
+            return Result.success(historicalData);
+        } catch (Exception e) {
+            log.error("Error getting historical health data: ", e);
+            return Result.error("Failed to retrieve historical health data: " + e.getMessage());
         }
     }
 
