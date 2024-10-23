@@ -4,6 +4,7 @@ import com.backend5620.object.Users;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserMapper {
@@ -23,4 +24,14 @@ public interface UserMapper {
 
     @Select("SELECT * FROM Users WHERE userId = #{userId}")
     Users getById(int userId);
+
+    @Update("UPDATE Users SET name = #{name}, email = #{email}, phone = #{phone} " +
+            "WHERE userId = #{userId}")
+    void updateUserInfo(Users user);
+
+    @Select("SELECT * FROM Users WHERE userId = #{userId}")
+    Users getUserById(int userId);
+
+    @Select("SELECT * FROM Users WHERE email = #{email}")
+    Users getUserByEmail(String email);
 }

@@ -27,6 +27,21 @@ public class UserServiceImpl implements UserService {
         return u;
     }
 
+    @Override
+    public void updateUserInfo(Users user) {
+        userMapper.updateUserInfo(user);
+    }
+
+    @Override
+    public Users getUserById(int userId) {
+        return userMapper.getUserById(userId);
+    }
+
+    @Override
+    public Users getUserByEmail(String email) {
+        return userMapper.getUserByEmail(email);
+    }
+
     public boolean register(Users user) {
         Users existUser = userMapper.getByUsername(user.getUsername());
         if (existUser != null) {

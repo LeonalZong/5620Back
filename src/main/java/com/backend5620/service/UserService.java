@@ -6,4 +6,8 @@ public interface UserService {
     Users login(Users user);
 
     boolean register(Users user);
+
+    void updateUserInfo(Users user);
+    Users getUserById(int userId);
+    Users getUserByEmail(String email);
 }

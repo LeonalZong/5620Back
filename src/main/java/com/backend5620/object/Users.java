@@ -11,8 +11,10 @@ public class Users {
 
     private int userId;
     private String username;
+    private String name;
     private String password; // 密码（默认 '123456'）
     private String email;
+    private String phone;
     private String role; // 用户角色 (例如 'Customer', 'Expert', 'TechTeam')
     private String registrationDate; // 注册时间，格式为 TIMESTAMP
 
