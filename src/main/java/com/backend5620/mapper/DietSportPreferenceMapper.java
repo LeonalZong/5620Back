@@ -5,16 +5,16 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface DietSportPreferenceMapper {
-    @Insert("INSERT INTO DietSportPreferences (user_id, diet_preferences, sport_preferences, updated_at) " +
+    @Insert("INSERT INTO DietSportPreferences (userId, dietPreferences, sportPreferences, updatedAt) " +
             "VALUES (#{userId}, #{dietPreferences}, #{sportPreferences}, CURRENT_TIMESTAMP)")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insertDietSportPreference(DietSportPreference dietSportPreference);
 
-    @Select("SELECT * FROM DietSportPreferences WHERE user_id = #{userId}")
+    @Select("SELECT * FROM DietSportPreferences WHERE userId = #{userId}")
     DietSportPreference getDietSportPreferenceByUserId(int userId);
 
-    @Update("UPDATE DietSportPreferences SET diet_preferences = #{dietPreferences}, " +
-            "sport_preferences = #{sportPreferences}, updated_at = CURRENT_TIMESTAMP " +
-            "WHERE user_id = #{userId}")
+    @Update("UPDATE DietSportPreferences SET dietPreferences = #{dietPreferences}, " +
+            "sportPreferences = #{sportPreferences}, updatedAt = CURRENT_TIMESTAMP " +
+            "WHERE userId = #{userId}")
     void updateDietSportPreference(DietSportPreference dietSportPreference);
 }
